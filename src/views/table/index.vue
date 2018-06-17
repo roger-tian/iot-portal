@@ -64,8 +64,8 @@ export default {
       this.listLoading = true
       getList(this.listQuery).then(response => {
         this.list = response.data.items
-        this.listLoading = false
-      })
+      this.listLoading = false
+    })
     }
   }
 }

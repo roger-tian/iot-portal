@@ -41,13 +41,10 @@
   export default {
     name: 'HistoryData',
     components: { ECharts },
-    created: () => {
-
-    },
     data() {
       return {
         selectZb: '0',
-        selectDate: '2018-06-05',
+        selectDate: '',
         zbList: [{ name: 'PM<sub>2.5</sub>', id: '0' },
           { name: 'C0<sub>2</sub>', id: '1' },
           { name: 'TVOC', id: '2' },
@@ -103,21 +100,30 @@
         }
       }
     },
+    created() {
+      this.fetchData(this.selectDate, this.selectZb)
+    },
     methods: {
+      fetchData(date, type) {
+        console.log(date)
+        // var str = date.toLocaleDateString().replace(/(\d+)[^\d](\d+)[^\d](\d+)[^\d]/, '$1-$2-$3')
+        // console.log(str)
+        var sType = ['pm25', 'co2', 'tvoc', 'temperature', 'humidity', 'formaldehyde']
+        var decimal = [0, 0, 3, 1, 1, 3]
+        getHistoryData(date, sType[type]).then(response => {
+          console.log(response)
+          var data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          for (var i = 0; i < response.length; i++) {
+            data[i] = parseFloat(response[i].value).toFixed(decimal[type])
+          }
+          console.log(this)
+          this.lineOpt.series.data = data
+        })
+      },
       // 指标切换事件
       onZbChange: function(zb) {
         this.selectZb = zb
-        var type = ['pm25', 'co2', 'tvoc', 'temperature', 'humidity', 'formaldehyde']
-        var decimal = [0, 0, 3, 1, 1, 3]
-        getHistoryData('', type[this.selectZb]).then(response => {
-          console.log(response)
-          console.log(this.lineOpt.series.data)
-          var data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-          for (var i = 0; i < response.length; i++) {
-            data[i] = parseFloat(response[i].value).toFixed(decimal[this.selectZb])
-          }
-          this.lineOpt.series.data = data
-        })
+        this.fetchData(this.selectDate, this.selectZb)
       }
     }
   }
