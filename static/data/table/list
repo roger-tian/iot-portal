@@ -1,0 +1,37 @@
+{
+  "code": 20000,
+  "data": {
+    "items": [
+      {
+        "user_name": "admin",
+        "time": "2018-06-04 09:01:22",
+        "device_id": "总开关",
+        "command":"开关打开"
+      },
+      {
+        "user_name": "admin",
+        "time": "2018-06-04 09:02:22",
+        "device_id": "智能灯一",
+        "command": "开关打开"
+      },
+      {
+        "user_name": "admin",
+        "time": "2018-06-04 09:03:22",
+        "device_id": "智能灯一",
+        "command":"开关打开"
+      },
+      {
+        "user_name": "test",
+        "time": "2018-06-04 09:02:22",
+        "device_id": "智能灯一",
+        "command": "开关打开"
+      },
+      {
+        "user_name": "zhangsan",
+        "time": "2018-06-04 09:03:22",
+        "device_id": "智能灯一",
+        "command":"开关打开"
+      }
+    ]
+  }
+}

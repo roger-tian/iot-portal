@@ -1,0 +1,8 @@
+{
+  "code":20000,
+   "data":{
+     "name": "admin",
+     "avatar": "http://localhost:9528/static/data/user/zh_tx.png",
+     "roles": ["管理员"]
+   }
+}
