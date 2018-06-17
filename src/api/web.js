@@ -63,3 +63,7 @@ const SensorMethod = {
 export function sensorData(onOff) {
   return request.post(SensorMethod.SensorData, { })
 }
+
+export function getHistoryData(date, type) {
+  return request.post('/control/sensor/history', { date: date, type: type })
+}

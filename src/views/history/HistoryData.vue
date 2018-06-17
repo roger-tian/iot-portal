@@ -37,6 +37,7 @@
   import ECharts from 'vue-echarts/components/ECharts.vue'
   import 'echarts/lib/chart/line'
   import 'echarts/lib/component/tooltip'
+  import { getHistoryData } from '@/api/web'
   export default {
     name: 'HistoryData',
     components: { ECharts },
@@ -73,7 +74,7 @@
                 color: '#999'
               }
             },
-            data: ['05/30', '05/31', '06/01', '06/02', '06/03', '06/04', '06/05']
+            data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
           },
           yAxis: {
             type: 'value',
@@ -97,7 +98,7 @@
               }
             },
             areaStyle: {},
-            data: [23, 45, 67, 86, 43, 56, 76]
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
           }
         }
       }
@@ -106,6 +107,17 @@
       // 指标切换事件
       onZbChange: function(zb) {
         this.selectZb = zb
+        var type = ['pm25', 'co2', 'tvoc', 'temperature', 'humidity', 'formaldehyde']
+        var decimal = [0, 0, 3, 1, 1, 3]
+        getHistoryData('', type[this.selectZb]).then(response => {
+          console.log(response)
+          console.log(this.lineOpt.series.data)
+          var data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          for (var i = 0; i < response.length; i++) {
+            data[i] = parseFloat(response[i].value).toFixed(decimal[this.selectZb])
+          }
+          this.lineOpt.series.data = data
+        })
       }
     }
   }
