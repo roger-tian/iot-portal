@@ -427,19 +427,7 @@ export default {
               this.$store.commit('SET_MACHINESIG', param)
               break
             case 'machine0Volume':
-              var volume0 = this.$store.getters.status.machine[0].volume
-              if (str[1] === '1') {
-                volume0++
-                if (volume0 > 100) {
-                  volume0 = 100
-                }
-              } else {
-                volume0--
-                if (volume0 < 0) {
-                  volume0 = 0
-                }
-              }
-              param = { index: 0, volume: volume0 }
+              param = { index: 0, volume: parseInt(str[1]) }
               this.$store.commit('SET_MACHINEVOLUME', param)
               break
             case 'machine1Switch':
@@ -459,19 +447,7 @@ export default {
               this.$store.commit('SET_MACHINESIG', param)
               break
             case 'machine1Volume':
-              var volume1 = this.$store.getters.status.machine[1].volume
-              if (str[1] === '1') {
-                volume1++
-                if (volume1 > 100) {
-                  volume1 = 100
-                }
-              } else {
-                volume1--
-                if (volume1 < 0) {
-                  volume1 = 0
-                }
-              }
-              param = { index: 1, volume: volume1 }
+              param = { index: 1, volume: parseInt(str[1]) }
               this.$store.commit('SET_MACHINEVOLUME', param)
               break
             case 'led0Switch':
