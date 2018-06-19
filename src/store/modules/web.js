@@ -4,10 +4,10 @@ const web = {
   state: {
     welcomeSwitch: '0',
     allSwitch: '0',
-    machine: [{ switch: '0', sigSource: '0', volume: 0 }, { switch: '0', sigSource: '0', volume: 0 }],
+    machine: [{ switch: '0', sigSource: '1', volume: 0 }, { switch: '0', sigSource: '1', volume: 0 }],
     led: [{ switch: '0' }, { switch: '0' }],
     curtain: [{ switch: '0' }],
-    purifier: [{ switch: '0', lock: '0', sleep: '0', mode: '0', anion: '0', uv: '0', timer: '0', windSpeed: '0' }]
+    purifier: [{ switch: '0', mode: [], windSpeed: 1 }]
   },
   mutations: {
     SET_WELCOME: (state, onOff) => {
@@ -34,24 +34,24 @@ const web = {
     SET_PURIFIERSWITCH: (state, onOff) => {
       state.purifier[0].switch = onOff
     },
-    SET_PURIFIERLOCK: (state, lock) => {
-      state.purifier[0].lock = lock
-    },
-    SET_PURIFIERSLEEP: (state, sleep) => {
-      state.purifier[0].sleep = sleep
-    },
+    // SET_PURIFIERLOCK: (state, lock) => {
+    //   state.purifier[0].lock = lock
+    // },
+    // SET_PURIFIERSLEEP: (state, sleep) => {
+    //   state.purifier[0].sleep = sleep
+    // },
     SET_PURIFIERMODE: (state, mode) => {
       state.purifier[0].mode = mode
     },
-    SET_PURIFIERANION: (state, anion) => {
-      state.purifier[0].anion = anion
-    },
-    SET_PURIFIERUV: (state, uv) => {
-      state.purifier[0].uv = uv
-    },
-    SET_PURIFIERTIMER: (state, t) => {
-      state.purifier[0].timer = t
-    },
+    // SET_PURIFIERANION: (state, anion) => {
+    //   state.purifier[0].anion = anion
+    // },
+    // SET_PURIFIERUV: (state, uv) => {
+    //   state.purifier[0].uv = uv
+    // },
+    // SET_PURIFIERTIMER: (state, t) => {
+    //   state.purifier[0].timer = t
+    // },
     SET_PURIFIERWINDSPEED: (state, windSpeed) => {
       state.purifier[0].windSpeed = windSpeed
     }

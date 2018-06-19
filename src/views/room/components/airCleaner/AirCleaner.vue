@@ -15,10 +15,10 @@
         <div class="fun-card" v-for="fun in device.funList">
           <div class="fun-name">{{fun.name}}</div>
           <div style="padding: 8px;" class="m-device-opt">
-            <el-checkbox-group v-if="fun.type==='mut'" v-model="fun.cmods" >
+            <el-checkbox-group v-if="fun.type==='mut'" v-model="status.purifier[0].mode" >
               <el-checkbox class="igrs-checkbox" v-for="mod in fun.mod" :label="mod.id" :key="mod.id" disabled>{{mod.name}}</el-checkbox>
             </el-checkbox-group>
-            <el-radio-group v-else v-model="fun.cmods" >
+            <el-radio-group v-else v-model="status.purifier[0].windSpeed" >
               <el-radio class="igrs-radio" v-for="mod in fun.mod" :label="mod.id" :key="mod.id" disabled>{{mod.name}}</el-radio>
             </el-radio-group>
           </div>
@@ -43,24 +43,23 @@
                   cmods: [],
                   type: 'mut',
                   mod: [
-                    { name: '童锁', id: 0 },
-                    { name: '睡眠', id: 1 },
-                    { name: '自动', id: 2 },
-                    { name: '负离子', id: 3 },
-                    { name: 'UV', id: 4 },
-                    { name: '定时', id: 5 }]
+                    { name: '童锁', id: 1 },
+                    { name: '睡眠', id: 2 },
+                    { name: '自动', id: 3 },
+                    { name: '负离子', id: 4 },
+                    { name: 'UV', id: 5 },
+                    { name: '定时', id: 6 }]
                 },
                 {
                   name: '风速控制',
-                  cmods: -1,
+                  cmods: 1,
                   type: 'single',
                   mod: [
-                    { name: '高速', id: 0 },
-                    { name: '中速', id: 1 },
-                    { name: '低速', id: 2 }]
+                    { name: '高速', id: 3 },
+                    { name: '中速', id: 2 },
+                    { name: '低速', id: 1 }]
                 }
               ]
-
             }
           ]
         }

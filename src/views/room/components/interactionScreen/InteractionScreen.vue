@@ -60,23 +60,23 @@
           deviceList: [
             { name: '前交互大屏',
               state: 0,
-              cmod: { name: '主页', id: 0 },
+              cmod: { name: '主页', id: '1' },
               pv: 0,
               mod: [
-                { name: '主页', id: 0 },
-                { name: 'HDMI1', id: 1 },
-                { name: 'HDMI2', id: 2 },
-                { name: '内置电脑', id: 3 }]
+                { name: '主页', id: '1' },
+                { name: 'HDMI1', id: '2' },
+                { name: 'HDMI2', id: '3' },
+                { name: '内置电脑', id: '4' }]
             },
             { name: '后交互大屏',
               state: 0,
-              cmod: { name: '主页', id: 0 },
+              cmod: { name: '主页', id: '1' },
               pv: 0,
               mod: [
-                { name: '主页', id: 0 },
-                { name: 'HDMI1', id: 1 },
-                { name: 'HDMI2', id: 2 },
-                { name: '内置电脑', id: 3 }]
+                { name: '主页', id: '1' },
+                { name: 'HDMI1', id: '2' },
+                { name: 'HDMI2', id: '3' },
+                { name: '内置电脑', id: '4' }]
             }
           ]
         }
@@ -102,6 +102,9 @@
             volume = '0'
           }
           this.deviceList[index].pv = this.$store.getters.status.machine[index].volume
+          console.log(this.$store.getters.status)
+          console.log(this.deviceList[index].pv)
+          console.log(volume)
           this.$store.dispatch('MachineVolume', { index: index, volume: volume }).then(ret => {
             console.log('111')
           })

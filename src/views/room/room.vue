@@ -183,6 +183,7 @@ export default {
         console.log(response)
         var param
         var allSwitch, machine0Switch, machine1Switch, led0Switch, led1Switch, curtainSwitch
+        var mode = [0, 0, 0, 0, 0, 0] // lc, sl, mo, io, uv, ti
         for (var i = 0; i < response.length; i++) {
           switch (response[i].deviceId) {
             case 'welcomemode':
@@ -243,30 +244,31 @@ export default {
                   this.$store.commit('SET_PURIFIERSWITCH', response[i].value)
                   break
                 case 'lock':
-                  this.$store.commit('SET_PURIFIERLOCK', response[i].value)
+                  mode[0] = (response[i].value === '1') ? 1 : 0
                   break
                 case 'sleep':
-                  this.$store.commit('SET_PURIFIERSLEEP', response[i].value)
+                  mode[1] = (response[i].value === '1') ? 2 : 0
                   break
                 case 'mode':
-                  this.$store.commit('SET_PURIFIERMODE', response[i].value)
+                  mode[2] = (response[i].value === '1') ? 3 : 0
                   break
                 case 'anion':
-                  this.$store.commit('SET_PURIFIERANION', response[i].value)
+                  mode[3] = (response[i].value === '1') ? 4 : 0
                   break
                 case 'uv':
-                  this.$store.commit('SET_PURIFIERUV', response[i].value)
+                  mode[4] = (response[i].value === '1') ? 5 : 0
                   break
                 case 'timer':
-                  this.$store.commit('SET_PURIFIERTIMER', response[i].value)
+                  mode[5] = (response[i].value === '1') ? 6 : 0
                   break
                 case 'windspeed':
-                  this.$store.commit('SET_PURIFIERWINDSPEED', response[i].value)
+                  this.$store.commit('SET_PURIFIERWINDSPEED', parseInt(response[i].value))
                   break
               }
               break
           }
         }
+        this.$store.commit('SET_PURIFIERMODE', mode)
         if (machine0Switch + machine1Switch + led0Switch + led1Switch + curtainSwitch === '00000') {
           console.log(machine0Switch, machine1Switch, led0Switch, led1Switch, curtainSwitch)
           allSwitch = '0'
@@ -312,11 +314,46 @@ export default {
         var data = event.data
         var result
         var results
+        var i
         if (data.search('pw::') !== -1) { // purifier data from server
-          console.log('111')
+          var purifierSwitch, windSpeed
+          var mode = [0, 0, 0, 0, 0, 0] // lc, sl, mo, io, uv, ti
+          results = data.split(',')
+          for (i = 0; i < results.length; i++) {
+            result = results[i].split('::')
+            switch (result[0]) {
+              case 'pw':
+                purifierSwitch = (result[1] === '10') ? '1' : '0'
+                this.$store.commit('SET_PURIFIERSWITCH', purifierSwitch)
+                break
+              case 'lc':
+                mode[0] = (result[1] === '10') ? 1 : 0
+                break
+              case 'sl':
+                mode[1] = (result[1] === '10') ? 2 : 0
+                break
+              case 'mo':
+                mode[2] = (result[1] === '10') ? 3 : 0
+                break
+              case 'io':
+                mode[3] = (result[1] === '10') ? 4 : 0
+                break
+              case 'uv':
+                mode[4] = (result[1] === '10') ? 5 : 0
+                break
+              case 'ti':
+                mode[5] = (result[1] !== '000') ? 6 : 0
+                break
+              case 'fa':
+                windSpeed = parseInt(result[1][0])
+                this.$store.commit('SET_PURIFIERWINDSPEED', windSpeed)
+                break
+            }
+          }
+          this.$store.commit('SET_PURIFIERMODE', mode)
         } else if (data.search('pm25') !== -1) { // sensor data from server
           results = data.split(',')
-          for (var i = 0; i < results.length; i++) {
+          for (i = 0; i < results.length; i++) {
             result = results[i].split(':')
             switch (result[0]) {
               case 'pm25':
@@ -390,7 +427,19 @@ export default {
               this.$store.commit('SET_MACHINESIG', param)
               break
             case 'machine0Volume':
-              param = { index: 0, volume: parseInt(str[1]) }
+              var volume0 = this.$store.getters.status.machine[0].volume
+              if (str[1] === '1') {
+                volume0++
+                if (volume0 > 100) {
+                  volume0 = 100
+                }
+              } else {
+                volume0--
+                if (volume0 < 0) {
+                  volume0 = 0
+                }
+              }
+              param = { index: 0, volume: volume0 }
               this.$store.commit('SET_MACHINEVOLUME', param)
               break
             case 'machine1Switch':
@@ -410,7 +459,19 @@ export default {
               this.$store.commit('SET_MACHINESIG', param)
               break
             case 'machine1Volume':
-              param = { index: 1, volume: parseInt(str[1]) }
+              var volume1 = this.$store.getters.status.machine[1].volume
+              if (str[1] === '1') {
+                volume1++
+                if (volume1 > 100) {
+                  volume1 = 100
+                }
+              } else {
+                volume1--
+                if (volume1 < 0) {
+                  volume1 = 0
+                }
+              }
+              param = { index: 1, volume: volume1 }
               this.$store.commit('SET_MACHINEVOLUME', param)
               break
             case 'led0Switch':
