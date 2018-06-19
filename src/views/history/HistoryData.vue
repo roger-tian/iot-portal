@@ -108,6 +108,9 @@
         console.log(date)
         // var str = date.toLocaleDateString().replace(/(\d+)[^\d](\d+)[^\d](\d+)[^\d]/, '$1-$2-$3')
         // console.log(str)
+        // var str = new Date(date)
+        // var strTime = str.getFullYear() + '-' + (str.getMonth() + 1) + '-' + str.getDate()
+        // console.log(strTime)
         var sType = ['pm25', 'co2', 'tvoc', 'temperature', 'humidity', 'formaldehyde']
         var decimal = [0, 0, 3, 1, 1, 3]
         getHistoryData(date, sType[type]).then(response => {

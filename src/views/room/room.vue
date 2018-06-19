@@ -298,8 +298,8 @@ export default {
       // websocket
       var websocket = null
       if ('WebSocket' in window) {
-        // websocket = new WebSocket('ws://192.168.1.150:8080/igrsiot/websocket')
-        websocket = new WebSocket('ws://localhost:8080/igrsiot/websocket')
+        websocket = new WebSocket('ws://192.168.1.150:8080/igrsiot/websocket')
+        // websocket = new WebSocket('ws://localhost:8080/igrsiot/websocket')
       } else {
         console.log('browser not support websocket')
       }

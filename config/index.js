@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        // target: 'http://192.168.1.150:8080/',
-        target: 'http://localhost:8080/',
+        target: 'http://192.168.1.150:8080/',
+        // target: 'http://localhost:8080/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
@@ -66,7 +66,7 @@ module.exports = {
     assetsSubDirectory: 'static',
 
     // you can set by youself according to actual condition
-    assetsPublicPath: './',
+    assetsPublicPath: '/igrsiot/',
 
     /**
      * Source Maps
